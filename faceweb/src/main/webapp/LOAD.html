@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        .welcome-msg {
+            font-size: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-links {
+            list-style-type: none;
+            padding: 0;
+            margin-bottom: 20px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+        }
+
+        .profile-links li {
+            margin-right: 10px;
+        }
+
+        .profile-links li a {
+            text-decoration: none;
+            color: #333;
+            background-color: #f2f2f2;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .profile-links li a:hover {
+            background-color: #ccc;
+        }
+
+        .user-list,
+        .friends-list {
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .user-list-item,
+        .friend-item {
+            margin-bottom: 10px;
+        }
+
+        .friend-item span {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .friend-item span:first-child {
+            font-weight: bold;
+        }
+
+        /* Responsive Styles */
+        @media only screen and (max-width: 768px) {
+            .profile-links {
+                flex-wrap: wrap;
+            }
+
+            .profile-links li {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+
+            .user-list,
+            .friends-list {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Page</h1>
+    <p class="welcome-msg">Welcome <%= email %></p>
+
+    <ul class="profile-links">
+        <li><a href="viewprofileservlet">View profile</a></li>
+        <li><a href="edit.html">Edit profile</a></li>
+        <li><a href="deleteprofileservlet">Delete profile</a></li>
+        <li><a href="search.html">Search profile</a></li>
+        <li><a href="viewallprofile">View all profiles</a></li>
+        <li><a href="friendslist">Pending Friends Requests</a></li>
+        <li><a href="messages">Message</a></li>
+        <li><a href="acceptfriends">Friends Requests</a></li>
+        <li><a href="RealFriendsList">Friends</a></li>
+        <li><a href="logoutservrlet">Logout</a></li>
+    </ul>
+
+    <div class="user-list">
+        <h2>User List</h2>
+        	<%
+				ArrayList<faceuser> fv =(ArrayList<faceuser>)request.getAttribute("userlist");
+        
+        for (faceuser fu : fv) { %>
+            <div class="user-list-item">
+                <form method="post" action="addfriends">
+                    <label> <%= fu.getName() %></label>
+                    <input type="hidden" name="em" value="<%= fu.getEmail() %>>
+                    <input type="submit" value="Add Friend">
+                </form>
+            </div>
+        <% } %>
+    </div>
+	
+    <div id="friend-list">
+        <h2>Friend List</h2>
+        <ul>
+            <% for (friendlist friend : friends) { %>
+                <li>
+                    <span>Name:</span>
+                    <span><%= friend.getName() %></span>
+                    <br>
+                    <span>Email:</span>
+                    <span><%= friend.getEmail() %></span>
+                </li>
+            <% } %>
+        </ul>
+    </div>
+   </div>
+</body>
+</html>
